@@ -17,3 +17,5 @@ kat1234: +R100.0
 Withdrawal: -R12.54
 kat1234: +R1234.87
 Withdrawal: -R123.54
+dikgobe12345: +R12012.0
+Withdrawal: -R1000.0

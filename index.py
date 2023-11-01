@@ -13,6 +13,7 @@ while True:
         # Data to be stored
         username = input("Userame:")
         password = input("create password:")
+        amount_to_add = float(input("Enter: "))
             
         with open("newdata.txt", "r") as file:
             # Read the lines of the file into a list
@@ -42,7 +43,24 @@ while True:
             with open("newdata.txt", "a") as file:
                 # Write the data to the file
                 file.write(username.lower()  + " "+ password.lower()  + "\n")
-          
+            ################################################################
+            with open(file_name, "r") as file:
+                # Read the lines of the file into a list
+                lines = file.readlines()
+                new_list = [item[:-1] for item in lines]
+                comb = username+password
+                print(comb)
+
+                for i in range(len(new_list)):#removing space between the name and password
+                    words = new_list[i].split()
+                    new_list[i] = ''.join(words)
+                    if comb == new_list[i]:
+                        isExist = True
+                    else:
+                        isExist = False
+                print(new_list)
+            ################################################################
+            
             print(f"Registration was a success")
             print("Do you want ot proceed with transaction? \n1). Yes. \n2). No.")
             user_choice = input('Option: ')
