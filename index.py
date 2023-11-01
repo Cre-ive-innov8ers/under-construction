@@ -1,4 +1,9 @@
 
+from datetime import datetime
+
+# Get the current date and time
+the_datetime = datetime.now()
+current_datetime = the_datetime.strftime("%Y %H:%M:%S")
 
 balance = 20000000000000.0
 #############
@@ -57,9 +62,9 @@ while True:
                 new_balance = current_balance + amount_to_add
 
                 # Update the first element of the list with the new balance
-                new_list[0] = f"balance = R{new_balance:.2f}"
+                new_list[0] = f"{current_datetime} balance = R{new_balance:.2f}"
                 with open(file_name, 'a') as file:
-                    file.write(new_list[0])
+                    file.write(new_list[0] +"\n")
             #----------------------------------------------------------------
             
                 for i in range(len(new_list)):#removing space between the name and password
@@ -89,7 +94,7 @@ while True:
                         with open("Transaction Log.txt", "a") as log_file:
                             log_file.write(f"{comb}: +R{amount}\n")
                         with open(file_name, "a") as file:
-                            file.write(f"{comb}: +R{amount}\n")
+                            file.write(f"{current_datetime} {comb}: +R{amount}\n")
                             
                            
                 elif option == '2':#withdrawing option
@@ -107,7 +112,7 @@ while True:
                             with open("Transaction Log.txt", "a") as log_file:
                                 log_file.write(f"Withdrawal: -R{amount}\n")
                             with open(username, "a") as file:
-                                file.write(f"{comb}: -R{amount}\n")
+                                file.write(f"{current_datetime} {comb}: -R{amount}\n")
                         else:
                             print("Insufficient funds.")
    
@@ -129,7 +134,6 @@ while True:
         password = input("create password:")
         ################################
         #Lets do Deposits and Withdrawals
-       
         with open("newdata.txt", "r") as file:
             # Read the lines of the file into a list
             lines = file.readlines()
@@ -160,7 +164,7 @@ while True:
                         with open("Transaction Log.txt", "a") as log_file:
                             log_file.write(f"{comb}: +R{amount}\n")
                         with open(file_name, "a") as file:
-                            file.write(f"{comb}: +R{amount}\n")
+                            file.write(f"{current_datetime} {comb}: +R{amount}\n")
                     else:
                         print("################################################################\nInvalid input\n################################################################")
                 elif option == '2':
@@ -178,7 +182,7 @@ while True:
                             with open("Transaction Log.txt", "a") as log_file:
                                 log_file.write(f"Withdrawal: -R{amount}\n")
                             with open(username+".txt", "a") as file:
-                                file.write(f"{comb}: -R{amount}\n")
+                                file.write(f"{current_datetime} {comb}: -R{amount}\n")
                         else:
                             print("Insufficient funds.")
                 elif option == '3':

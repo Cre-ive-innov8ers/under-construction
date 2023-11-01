@@ -19,3 +19,7 @@ kat1234: +R1234.87
 Withdrawal: -R123.54
 dikgobe12345: +R12012.0
 Withdrawal: -R1000.0
+poly1234: +R1001.0
+qoma1234: +R12.0
+malusi2zitakele: +R200.0
+malusi2zitakele: +R1000.0
