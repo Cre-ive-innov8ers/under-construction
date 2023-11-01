@@ -37,7 +37,7 @@ while True:
         else:    
             file_name = username + ".txt"
             with open(file_name, "w") as file:
-                file.write('balance = 0.0 \n2')
+                file.write('balance = 0.0 \n')
                 
             # Open the file in write mode ("w")
             with open("newdata.txt", "a") as file:
@@ -48,16 +48,23 @@ while True:
                 # Read the lines of the file into a list
                 lines = file.readlines()
                 new_list = [item[:-1] for item in lines]
-                comb = username+password
-                print(comb)
+                print(new_list)
+            #----------------------------------------------------------------
+                balance_str = new_list[0].split('=')[1].strip()  # Extract the balance string and remove leading/trailing spaces
+                current_balance = float(balance_str.lstrip('R'))  # Convert to float
 
+                # Calculate the new balance
+                new_balance = current_balance + amount_to_add
+
+                # Update the first element of the list with the new balance
+                new_list[0] = f"balance = R{new_balance:.2f}"
+                with open(file_name, 'a') as file:
+                    file.write(new_list[0])
+            #----------------------------------------------------------------
+            
                 for i in range(len(new_list)):#removing space between the name and password
                     words = new_list[i].split()
                     new_list[i] = ''.join(words)
-                    if comb == new_list[i]:
-                        isExist = True
-                    else:
-                        isExist = False
                 print(new_list)
             ################################################################
             
