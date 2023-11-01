@@ -28,7 +28,7 @@ while True:
                     isExist = True
                 else:
                     isExist = False
-            print(new_list)
+            # print(new_list)
             
                 
         if isExist:
@@ -36,7 +36,7 @@ while True:
         else:    
             file_name = username + ".txt"
             with open(file_name, "w") as file:
-                file.write('balance = 0.0')
+                file.write('balance = 0.0 \n2')
                 
             # Open the file in write mode ("w")
             with open("newdata.txt", "a") as file:
@@ -152,7 +152,7 @@ while True:
                             #Log the withdrawal in the transaction log file
                             with open("Transaction Log.txt", "a") as log_file:
                                 log_file.write(f"Withdrawal: -R{amount}\n")
-                            with open(username, "a") as file:
+                            with open(username+".txt", "a") as file:
                                 file.write(f"{comb}: -R{amount}\n")
                         else:
                             print("Insufficient funds.")
@@ -166,7 +166,7 @@ while True:
                 print(f"Please check your credentials and try again or \nregister with us if you do not have an account with us.")
                 
                     
-            print(new_list)
+            # print(new_list)
             print("##########################################")
     elif choice == '3':
         print("Thank yo for choosing CI bank.")

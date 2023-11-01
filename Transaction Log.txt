@@ -8,3 +8,12 @@ Withdrawal: -R100.0
 malik2468: +R100.0
 malik2468: +R111.0
 Withdrawal: -R15000.0
+katt12345: +R123.76
+Withdrawal: -R12.87
+katt12345: +R1234.09
+katt12345: +R12.87
+Withdrawal: -R126.8
+kat1234: +R100.0
+Withdrawal: -R12.54
+kat1234: +R1234.87
+Withdrawal: -R123.54
