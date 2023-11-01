@@ -1,0 +1,10 @@
+Deposit: +R10.0
+
+kwazac03z4: +R100.0
+Withdrawal: -R1222.0
+malik1234: +R100.0
+Withdrawal: -R100.0
+Withdrawal: -R100.0
+malik2468: +R100.0
+malik2468: +R111.0
+Withdrawal: -R15000.0
