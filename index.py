@@ -69,8 +69,8 @@ def balance_update_deposit(balance, amount):
 #####################
 while True:
     print("----------------------------------------------------------------------")
-    choice = int(input("Welcome to CI Bank solutions\n1) Register\n2) login\n3) Exit\n----------------------------------------------------------------------\nOption: "))
-    if choice == 1:#register an accouhnt
+    choice = input("Welcome to CI Bank solutions\n1) Register\n2) login\n3) Exit\n----------------------------------------------------------------------\nOption: ")
+    if choice == '1':#register an accouhnt
         while True:
             name = input("Enter your name: ")
             if is_alpha_input(name):
@@ -152,7 +152,7 @@ while True:
                 break
             else:
                 print("A name can not be anything rather than alphabets only")              
-    elif choice == 2:#login
+    elif choice == '2':#login
         print("----------------------------------------------------------------------")
         name = input("Enter your name: ")
         password = input("Enter your password: ")
@@ -190,6 +190,7 @@ while True:
                 print("----------------------------------------------------------------------")
                 print(f"Hi {name}, Welcome to CI Bank Solutions!\nPlease navigate your way on this app")
                 print("----------------------------------------------------------------------")
+                
                 choice = input("1). Deposit\n2). Withdraw \n3). Exit\nOption: ")
                 print("----------------------------------------------------------------------")
 
@@ -360,10 +361,6 @@ while True:
                             with open("bank_data.txt", "w") as file:
                                 file.writelines(banking)
                                 
-                            
-                            #####################33
-                             ######################################
-                           
                             #######################3
                              #update bank data
                             bankdata_txt_withdrawal(name,current_datetime,my_amount)
@@ -390,3 +387,7 @@ while True:
                 print("Account does not exist, please register your account")
                 print("----------------------------------------------------------------------")
                 break
+    elif choice == '3':
+        break
+    else:
+        print("invalid input!")
