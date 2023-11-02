@@ -18,7 +18,7 @@ while True:
         # Data to be stored
         username = input("Userame:")
         password = input("create password:")
-        amount_to_add = float(input("Enter: "))
+        amount_to_add = float(input("Enter your starting balance: "))
             
         with open("newdata.txt", "r") as file:
             # Read the lines of the file into a list
@@ -43,7 +43,7 @@ while True:
             file_name = username + ".txt"
             with open(file_name, "w") as file:
                 file.write('balance = 0.0 \n')
-                
+                           
             # Open the file in write mode ("w")
             with open("newdata.txt", "a") as file:
                 # Write the data to the file
@@ -74,7 +74,7 @@ while True:
             ################################################################
             
             print(f"Registration was a success")
-            print("Do you want ot proceed with transaction? \n1). Yes. \n2). No.")
+            print("Do you want to proceed with transaction? \n1). Yes. \n2). No.")
             user_choice = input('Option: ')
             if user_choice == '1':#Yes
                 print('Continue with transaction')

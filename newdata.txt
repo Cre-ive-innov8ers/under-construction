@@ -14,3 +14,5 @@ qwoier 1234
 poly 1234
 qoma 1234
 malusi 2zitakele
+kat 1234
+kay 1234
