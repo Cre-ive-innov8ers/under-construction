@@ -379,7 +379,7 @@ while True:
                 elif choice == '3':#Exit
                     print("Thank you for using our services!")
                     print("----------------------------------------------------------------------")
- 
+                    break
                     break
                 else:
                     print("Invalid input!")
