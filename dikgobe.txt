@@ -1,3 +1,0 @@
-balance = 0.0 
-dikgobe12345: +R12012.0
-dikgobe12345: -R1000.0
