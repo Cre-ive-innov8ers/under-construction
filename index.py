@@ -6,6 +6,18 @@ import re
 the_datetime = datetime.now()
 current_datetime = the_datetime.strftime("%Y %H:%M:%S")
 
+def is_alpha_input(user_input):
+    # Check if all characters in the input are alphabets
+    return all(char.isalpha() for char in user_input)
+
+# # Prompt the user for input
+# user_input = input("Enter a string of alphabets: ")
+
+# # Check if the input consists of alphabets only
+# if is_alpha_input(user_input):
+#     print("Input contains only alphabets.")
+# else:
+#     print("Input contains non-alphabet characters.")
 
 '''This regex pattern ensures that the password contains    
     exactly 4 characters, which can be numbers (0-9) or 
@@ -68,81 +80,87 @@ while True:
     print("----------------------------------------------------------------------")
     choice = int(input("Welcome to CI Bank solutions\n1) Register\n2) login\n3) Exit\n----------------------------------------------------------------------\nOption: "))
     if choice == 1:#register an accouhnt
-        name = input("Enter your name: ")
         while True:
-            password = input("Enter your password: ")
-            if is_valid_password(password):
-                secure = name + password
-                print("----------------------------------------------------------------------")
-                #check if the account is already registered
-                if os.path.isfile(f"{name}.txt"):
-                    print("Account already exists")
-                    break
-                else:
-                    with open("user_infor.txt",'a') as file:
-                        file.write(name +" " + password +"\n")
-                    with open("user_infor.txt", "r") as file:
-                        dat = file.readlines()
-                    user_secure = [element.strip().replace(" ", "") for element in dat]
+            name = input("Enter your name: ")
+            if is_alpha_input(name):
+                while True:
+                    password = input("Enter your password: ")
                     
-                    # Print the new list
-                    
-                    
-                    strt_amount = float(input("To activate your account you need to deposit a start up amount.\nAmount: "))
-                    if strt_amount <= 0:
-                        print("your account can't be activated")
-                        break
-                    elif strt_amount > 0:
-                        print(f"Hi {name},your account has been successfully activated.\nCurrent Balance = R{strt_amount}")
-                        create_txt(name,strt_amount)
-                        bankdata_txt_deposit(name,current_datetime,strt_amount)
-                        ##################################
-                                    #crate a list from the data in the txt file
-                        with open("bank_data.txt", "r") as f:
-                            bank = f.readlines()
-                        #check if the account is already registered
-                    
-                        b_data = bank[0] #first element in the bank data.(balance)
-                        strdat = str(b_data) #
-                        position_of_r = strdat.find("R")
-                        bn_balance = strdat[position_of_r + 1:]
-                        #Bank balance.
-                        
-                        bank_bala =float(bn_balance)# current bank balance
-    
-                        ################################
-                        with open("bank_data.txt", "r") as file:
-                            lines = file.readlines()
-
-                        # Remove the first element (line) from the list
-                        lines.pop(0)
-
-                        # Write the modified content back to the text file
-                        with open("bank_data.txt", "w") as file:
-                            file.writelines(lines)
-                        #############################
-                        #Append the new balance to the top of the transaction log
-                        new_b_balance =f"{current_datetime} balance : R{bank_bala+strt_amount}\n"
-                        # Read the content of the text file
-                        with open("bank_data.txt","r")as file:
-                            bank_lines = file.readlines()
-
-                        # Add the new element at the beginning
-                        bank_lines.insert(0,new_b_balance)
-                        # Write the modified content back to the text file
-                        with open("bank_data.txt","w")as file:
-                            file.writelines(bank_lines)
-                            #update bank data
-                        ###############################
-                        
-                        break
-                    else:
-                        print("Invalid input!")
+                    if is_valid_password(password):
+                        secure = name + password
                         print("----------------------------------------------------------------------")
-                        break
+                        #check if the account is already registered
+                        if os.path.isfile(f"{name}.txt"):
+                            print("Account already exists")
+                            break
+                        else:
+                            with open("user_infor.txt",'a') as file:
+                                file.write(name +" " + password +"\n")
+                            with open("user_infor.txt", "r") as file:
+                                dat = file.readlines()
+                            user_secure = [element.strip().replace(" ", "") for element in dat]
+                            
+                            # Print the new list
+                            
+                            
+                            strt_amount = float(input("To activate your account you need to deposit a start up amount.\nAmount: "))
+                            if strt_amount <= 0:
+                                print("your account can't be activated")
+                                break
+                            elif strt_amount > 0:
+                                print(f"Hi {name},your account has been successfully activated.\nCurrent Balance = R{strt_amount}")
+                                create_txt(name,strt_amount)
+                                bankdata_txt_deposit(name,current_datetime,strt_amount)
+                                ##################################
+                                            #crate a list from the data in the txt file
+                                with open("bank_data.txt", "r") as f:
+                                    bank = f.readlines()
+                                #check if the account is already registered
+                            
+                                b_data = bank[0] #first element in the bank data.(balance)
+                                strdat = str(b_data) #
+                                position_of_r = strdat.find("R")
+                                bn_balance = strdat[position_of_r + 1:]
+                                #Bank balance.
+                                
+                                bank_bala =float(bn_balance)# current bank balance
+            
+                                ################################
+                                with open("bank_data.txt", "r") as file:
+                                    lines = file.readlines()
+
+                                # Remove the first element (line) from the list
+                                lines.pop(0)
+
+                                # Write the modified content back to the text file
+                                with open("bank_data.txt", "w") as file:
+                                    file.writelines(lines)
+                                #############################
+                                #Append the new balance to the top of the transaction log
+                                new_b_balance =f"{current_datetime} balance : R{bank_bala+strt_amount}\n"
+                                # Read the content of the text file
+                                with open("bank_data.txt","r")as file:
+                                    bank_lines = file.readlines()
+
+                                # Add the new element at the beginning
+                                bank_lines.insert(0,new_b_balance)
+                                # Write the modified content back to the text file
+                                with open("bank_data.txt","w")as file:
+                                    file.writelines(bank_lines)
+                                    #update bank data
+                                ###############################
+                                
+                                break
+                            else:
+                                print("Invalid input!")
+                                print("----------------------------------------------------------------------")
+                                break
+                    else:
+                        print("----------------------------------------------------------------------")
+                        print("Invalid Password,try again")  
+                break
             else:
-                print("----------------------------------------------------------------------")
-                print("Invalid Password,try again")    
+                print("A name can not be anything rather than alphabets only")              
     elif choice == 2:#login
         print("----------------------------------------------------------------------")
         name = input("Enter your name: ")
