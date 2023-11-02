@@ -153,9 +153,7 @@ while True:
             lists = file.readlines()
         # print(lists)
         my_new_list = [element.replace(" ", "").strip() for element in lists]
-        # print(my_new_list)
-        ################################
-        # listss = ['absa11', 'ass1212', 'a1', 'qwqqw', 'a1','a1']
+        
         search_user = name+password
 
         count = 0
