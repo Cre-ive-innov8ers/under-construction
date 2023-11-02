@@ -1,205 +1,323 @@
-
 from datetime import datetime
-
+import os #interacts with the operating sytem.
+ 
 # Get the current date and time
 the_datetime = datetime.now()
 current_datetime = the_datetime.strftime("%Y %H:%M:%S")
-
-balance = 20000000000000.0
-#############
-while True:
-    print("_____________________________________________________________________")
-    print("Welcome to CI bank.\n1). Register an account. \n2). Login. \n3). Exit")
-    choice = input("Option: ")
-    print("##################################################################### \n")
-    if choice == '1':  #Register an account   
-        #Storing of data
-        ######################################
-        # Data to be stored
-        username = input("Userame:")
-        password = input("create password:")
-        amount_to_add = float(input("Enter your starting balance: "))
-            
-        with open("newdata.txt", "r") as file:
-            # Read the lines of the file into a list
-            lines = file.readlines()
-            new_list = [item[:-1] for item in lines]
-            comb = username+password
-            print(comb)
-
-            for i in range(len(new_list)):#removing space between the name and password
-                words = new_list[i].split()
-                new_list[i] = ''.join(words)
-                if comb == new_list[i]:
-                    isExist = True
-                else:
-                    isExist = False
-            # print(new_list)
-            
-                
-        if isExist:
-            print('Use a different password')
-        else:    
-            file_name = username + ".txt"
-            with open(file_name, "w") as file:
-                file.write('balance = 0.0 \n')
-                           
-            # Open the file in write mode ("w")
-            with open("newdata.txt", "a") as file:
-                # Write the data to the file
-                file.write(username.lower()  + " "+ password.lower()  + "\n")
-            ################################################################
-            with open(file_name, "r") as file:
-                # Read the lines of the file into a list
-                lines = file.readlines()
-                new_list = [item[:-1] for item in lines]
-                print(new_list)
-            #----------------------------------------------------------------
-                balance_str = new_list[0].split('=')[1].strip()  # Extract the balance string and remove leading/trailing spaces
-                current_balance = float(balance_str.lstrip('R'))  # Convert to float
-
-                # Calculate the new balance
-                new_balance = current_balance + amount_to_add
-
-                # Update the first element of the list with the new balance
-                new_list[0] = f"{current_datetime} balance = R{new_balance:.2f}"
-                with open(file_name, 'a') as file:
-                    file.write(new_list[0] +"\n")
-            #----------------------------------------------------------------
-            
-                for i in range(len(new_list)):#removing space between the name and password
-                    words = new_list[i].split()
-                    new_list[i] = ''.join(words)
-                print(new_list)
-            ################################################################
-            
-            print(f"Registration was a success")
-            print("Do you want to proceed with transaction? \n1). Yes. \n2). No.")
-            user_choice = input('Option: ')
-            if user_choice == '1':#Yes
-                print('Continue with transaction')
-                print("Welcome again to CI Bank.\n1). Deposit.\n2).withdraw.\n3). Exit")
-                print('--------------------------------------------------------')
-                option =input('option: ')
-                print('--------------------------------------------------------')
-                if option == '1':#depositing option
-                    the_amount = input("How much would you like to deposit? ")
-                    amount = the_amount.replace(" ", "").strip()
-                    if amount.replace('.', '',1).isdigit():
-                        amount = float(amount)
-                        balance += amount
-                        print(f'Deposit of R{amount} was successfully made.')
-
-                        #Log the deposit in the transaction log file
-                        with open("Transaction Log.txt", "a") as log_file:
-                            log_file.write(f"{comb}: +R{amount}\n")
-                        with open(file_name, "a") as file:
-                            file.write(f"{current_datetime} {comb}: +R{amount}\n")
-                            
-                           
-                elif option == '2':#withdrawing option
-                    print('withdraw')
-                    the_amount = input("How much would you like to withdraw? ")
-                    amount = the_amount.replace(" ", "").strip()
-                    if amount.replace('.', '',1).isdigit():  # Check if input is a valid number
-                        amount = float(amount)
-                
-                        if amount <= balance:
-                            balance -= amount
-                            print(f'Withdrawal of R{amount} successful.')
-        
-                            #Log the withdrawal in the transaction log file
-                            with open("Transaction Log.txt", "a") as log_file:
-                                log_file.write(f"Withdrawal: -R{amount}\n")
-                            with open(username, "a") as file:
-                                file.write(f"{current_datetime} {comb}: -R{amount}\n")
-                        else:
-                            print("Insufficient funds.")
+ 
+def create_txt(name,opening_balance):
+    with open(f"{name}.txt", "w") as f:
+        f.write(f"{current_datetime} balance : +R{opening_balance:.2f}\n")#To be edited
+        # f.write(f"{current_datetime} {name} : +R{opening_balance:.2f}\n")
+       
+       
+    print(f"{name}.txt created with an opening balance of R{opening_balance:.2f}")
+    print("----------------------------------------------------------------------")
+ 
+# def deposit(amount, balance,name):
    
-                elif option == '3':
-                    print('Exit')
-                    break
-                else:
-                    print('invalid input')
-            elif user_choice == '2':#no
-                print('##################################### \n\tThank you for choosing CI Bank \n######################################')
+    # #############################
+    # file_name = name + ".txt"
+    # comb = name+password
+    # my_amount = amount.replace(" ", "").strip()
+    # if my_amount.replace('.', '',1).isdigit():
+    #     my_amount = float(my_amount)
+    #     balance += my_amount
+    #     print(f'Deposit of R{my_amount} was successfully made.')
+    #     #Log the deposit in the transaction log file
+    #     with open("Transaction Log.txt", "a") as log_file:
+    #         log_file.write(f"{comb}: +R{my_amount}\n")
+    #     with open(file_name, "a") as file:
+    #         file.write(f"{current_datetime} {name}: +R{my_amount}\n")
+    #     return balance
+    # else:
+    #     print("Invalid input")
+   
+    # return balance
+    ####################################
+ 
+def bankdata_txt_deposit(name,time,amount):
+    with open("Bank_data.txt", "a") as file:
+        file.write(f"{time} Balance: +R{amount}\n")
+        file.write(f"{time} {name}: +R{amount}\n")
+    file_name = name+".txt"
+    with open(file_name, "a") as file:
+        file.write(f"{current_datetime} {name}: +R{amount}\n")
+    print("Successfully added to bank data file")
+ 
+def bankdata_txt_withdrawal(name,time,amount):
+    with open("Bank_data.txt", "a") as file:
+        file.write(f"{time} {name} : -R{amount}\n")
+    print("Successfully added to bank data file")
+    file_name = name+".txt"
+    with open(file_name,"a")as f:
+        f.write(f"{time} {name}: -R{amount}")
+   
+def withdraw(amount, balance):
+    if balance >= amount:
+        new_balance = balance - amount
+    else:
+        print("Insufficient funds!")
+        print("----------------------------------------------------------------------")
+    return new_balance
+ 
+def balance_update_deposit(balance, amount):
+    new_balance = balance + amount
+    return new_balance
+ 
+def balance_update_deposit(balance, amount):
+    new_balance = balance - amount
+    return new_balance
+###############################
+ 
+ 
+#####################################
+ 
+ 
+ 
+ 
+ 
+ 
+#  Main function
+#####################
+ 
+while True:
+    print("----------------------------------------------------------------------")
+    choice = int(input("Welcome\n1) Register\n2) login\n3) Exit\nOption: "))
+   
+    if choice == 1:#register an accouhnt
+        name = input("Enter your name: ")
+        password = input("Enter your password: ")
+        print("----------------------------------------------------------------------")
+        #check if the account is already registered
+        if os.path.isfile(f"{name}.txt"):
+            print("Account already exists")
+        else:
+            strt_amount = float(input("To activate your account you need to deposit a start up amount.\nAmount: "))
+            if strt_amount <= 0:
+                print("your account can't be activated")
+                break
+            elif strt_amount > 0:
+                print(f"Hi {name},your account has been successfully activated with a balance = R{strt_amount}")
+                create_txt(name,strt_amount)
+                bankdata_txt_deposit(name,current_datetime,strt_amount)
+                print("----------------------------------------------------------------------")
             else:
-                print('Invalid selection')
-            ######Login
+                print("Invalid input!")
+                print("----------------------------------------------------------------------")
+                break
+    elif choice == 2:#login
+        print("----------------------------------------------------------------------")
+        name = input("Enter your name: ")
+        password = input("Enter your password: ")
+        while True:
+           
+           
+            #crate a list from the data in the txt file
+            with open("bank_data.txt", "r") as f:
+                data = f.readlines()
+            #check if the account is already registered
+           
+            bank_data = data[0] #first element in the bank data.(balance)
+            str_dat = str(bank_data) #
+            position_of_r = str_dat.find("R")
+            bn_balance = str_dat[position_of_r + 1:]
+            #Bank balance.
             
-    
-    elif choice == '2':#Login
-        print('please enter your credentials')
-        username = input("Userame:")
-        password = input("create password:")
-        ################################
-        #Lets do Deposits and Withdrawals
-        with open("newdata.txt", "r") as file:
-            # Read the lines of the file into a list
-            lines = file.readlines()
-            new_list = [item[:-1] for item in lines]
-            comb = username+password
-            print(comb)
-
-            for i in range(len(new_list)):#removing space between the name and password
-                words = new_list[i].split()
-                new_list[i] = ''.join(words)
-            if comb == new_list[i]:
-                
-                print("lets deposit")
-                print("##########################################")
-                print(f"Hy {username}, welcome back. \n1). Deposit. \n2). Withdraw. \n3). Exit.")
-                option = input("option: ")
-                #Option statements
-                if option == '1':
-                    print('deposit')
-                    file_name = username + ".txt"
-                    the_amount = input("How much would you like to deposit? ")
-                    amount = the_amount.replace(" ", "").strip()
-                    if amount.replace('.', '',1).isdigit():
-                        amount = float(amount)
-                        balance += amount
-                        print(f'Deposit of R{amount} was successfully made.')
+            bank_bal =float(bn_balance)# current bank balance
+            
+           
+            # print(balance_update)#first element in the bank data.(balance)
+            # my_r_pos = balance_update.find("R")
+            # my_r_aft_pos = balance_update[my_r_pos+:]
+            # my_b_float =(my_r_aft_pos[0])#For the data balamce.2
+            # print(f"this is the current user balance={my_b_float}")
+           
+            if os.path.isfile(f"{name}.txt"):
+                print(f"Hi {name}, Welcome to CI Bank Solutions!\nPlease navigate your way on this app")
+                print("----------------------------------------------------------------------")
+                choice = input("1). Deposit\n2). Withdraw \n3). Exit\nOption: ")
+                print("----------------------------------------------------------------------")
+ 
+                if choice == '1':#Deposit
+                    deposit_amount = input(f"Hi {name}, how much would you like to deposit?\nAmount: ")
+                    print("----------------------------------------------------------------------")
+                    ################################
+                    #############################
+                    file_name = name + ".txt"
+                    comb = name+password
+                    my_amount = deposit_amount.replace(" ", "").strip()
+                    if my_amount.replace('.', '',1).isdigit():
+                        my_amount = float(my_amount)
+                       
+                        #create a list from the users data in the txt
+                        with open(file_name, "r") as f:
+                            userdata = f.readlines()
+                        user_data = userdata[0] #first element in the bank data.(balance)
+                        str_userdata = str(user_data) #
+                        position_of_r = str_userdata.find("R")
+                        us_balance = str_userdata[position_of_r + 1:]
+                        #Bank balance.
+                        user_bal =float(us_balance)# current bank balance
+                        print(user_bal)
+           
+                        user_bal = user_bal + my_amount #cureent user balance
+                        print(f'Deposit of R{my_amount} was successfully made.\n')
+                        print(f'Current balance = R{user_bal}.')
+                       
                         #Log the deposit in the transaction log file
                         with open("Transaction Log.txt", "a") as log_file:
-                            log_file.write(f"{comb}: +R{amount}\n")
-                        with open(file_name, "a") as file:
-                            file.write(f"{current_datetime} {comb}: +R{amount}\n")
+                            log_file.write(f"{comb}: +R{my_amount}\n")
+                        
+                       
+                        #User update
+                        #######################################
+                        with open(file_name, "r") as file:
+                            lines = file.readlines()
+ 
+                         # Check if there are lines in the file
+   
+                        # Remove the first element (line) from the list
+                        lines.pop(0)
+ 
+                        # Write the modified content back to the text file
+                        with open(file_name, "w") as file:
+                            file.writelines(lines)
+
+                        ######################################
+                        #Bank Data update
+                        with open('bank_data.txt', "r") as file:
+                            bank_lines = file.readlines()
+ 
+                         # Check if there are lines in the file
+   
+                        # Remove the first element (line) from the list
+                        bank_lines.pop(0)
+ 
+                        # Write the modified content back to the text file
+                        with open(file_name, "w") as file:
+                            file.writelines(bank_lines)
+    
+                        #######################################
+                       
+                        #Append the new balance to the top of the transaction log
+                        new_user_balance = f"{current_datetime} balance : R{user_bal}\n"
+                        new_bank_balance =f"{current_datetime} balance : R{bank_bal}\n"
+                        # Read the content of the text file
+                        with open(file_name, "r") as file:
+                            lines = file.readlines()
+                        with open("bank_data.txt","r")as file:
+                            bank_lines = file.readlines()
+ 
+                        # Add the new element at the beginning
+                        lines.insert(0, new_user_balance)
+                        bank_lines.insert(0,new_bank_balance)
+                        # Write the modified content back to the text file
+                        with open(file_name, "w") as file:
+                            file.writelines(lines)
+                        with open("bank_data.txt","w")as file:
+                            file.writelines(bank_lines)
+                         #update bank data
+                        bankdata_txt_deposit(name,current_datetime,my_amount)
+                       
+                       
                     else:
-                        print("################################################################\nInvalid input\n################################################################")
-                elif option == '2':
-                    print('withdraw')
-                    the_amount = input("How much would you like to withdraw? ")
-                    amount = the_amount.replace(" ", "").strip()
-                    if amount.replace('.', '',1).isdigit():  # Check if input is a valid number
-                        amount = float(amount)
+                        print("Invalid input")
+                elif choice == '2':#Withdraw
+                    withdraw_amount = input(f"Hi {name}, how much would you like to deposit?\nAmount: ")
+                    print("----------------------------------------------------------------------")
+                    ################################
+                    #############################
+                    file_name = name + ".txt"
+                    comb = name+password
+                    my_amount = withdraw_amount.replace(" ", "").strip()
+                    if my_amount.replace('.', '',1).isdigit():
+                        my_amount = float(my_amount)
+                        
+                        #create a list from the users data in the txt
+                        with open(file_name, "r") as f:
+                            userdata = f.readlines()
+                        user_data = userdata[0] #first element in the bank data.(balance)
+                        str_userdata = str(user_data) #
+                        position_of_r = str_userdata.find("R")
+                        us_balance = str_userdata[position_of_r + 1:]
+                        #Bank balance.
+                        user_bal =float(us_balance)# current bank balance
+                        if user_bal > my_amount:
+                            # print(user_bal)
                 
-                        if amount <= balance:
-                            balance -= amount
-                            print(f'Withdrawal of R{amount} successful.')
-        
-                            #Log the withdrawal in the transaction log file
+                            user_bal = user_bal - my_amount #cureent user balance
+                            print(f'Deposit of R{my_amount} was successfully made.\n')
+                            print(f'Current balance = R{user_bal}.')
+                            
+                            #Log the deposit in the transaction log file
                             with open("Transaction Log.txt", "a") as log_file:
-                                log_file.write(f"Withdrawal: -R{amount}\n")
-                            with open(username+".txt", "a") as file:
-                                file.write(f"{current_datetime} {comb}: -R{amount}\n")
+                                log_file.write(f"{comb}: -R{my_amount}\n")
+                            
+                            
+                            #User update
+                            #######################################
+                            with open(file_name, "r") as file:
+                                lines = file.readlines()
+
+                                # Check if there are lines in the file
+
+                            # Remove the first element (line) from the list
+                            lines.pop(0)
+
+                            # Write the modified content back to the text file
+                            with open(file_name, "w") as file:
+                                file.writelines(lines)
+                             ######################################
+                            #Bank Data update
+                            with open('bank_data.txt', "r") as file:
+                                bank_lines = file.readlines()
+
+                                # Check if there are lines in the file
+
+                            # Remove the first element (line) from the list
+                            bank_lines.pop(0)
+
+                            # Write the modified content back to the text file
+                            with open(file_name, "w") as file:
+                                file.writelines(bank_lines)
+                             #######################################
+                            
+                            #Append the new balanc tot the top of the transaction log
+                            new_element = f"{current_datetime} balance : R{user_bal}\n"
+
+                            # Read the content of the text file
+                            with open(file_name, "r") as file:
+                                lines = file.readlines()
+
+                            # Add the new element at the beginning
+                            lines.insert(0, new_element)
+                            
+                            # Write the modified content back to the text file
+                            with open(file_name, "w") as file:
+                                file.writelines(lines)
+                             #update bank data
+                            bankdata_txt_withdrawal(name,current_datetime,my_amount)
+                        
                         else:
-                            print("Insufficient funds.")
-                elif option == '3':
-                    print("Thank you for using our CI Bank App")
+                            print("Insuficient funds")
+                            print("----------------------------------------------------------------------")
+                   
+                    else:
+                        print("Invalid Selection")
+                        print("----------------------------------------------------------------------")
+
+                elif choice == '3':#Exit
+                    print("Thank you for using our services!")
+                    print("----------------------------------------------------------------------")
+ 
                     break
                 else:
-                    print('invalid input')
+                    print("Invalid input!")
+                    print("----------------------------------------------------------------------")
+                    break
+ 
             else:
-                
-                print(f"Please check your credentials and try again or \nregister with us if you do not have an account with us.")
-                
-                    
-            # print(new_list)
-            print("##########################################")
-    elif choice == '3':
-        print("Thank yo for choosing CI bank.")
-        print("##########################################\n############################################")
-        
-    else:
-        print('invalid input!')
+                print("Account does not exist, please register your account")
+                print("----------------------------------------------------------------------")
+                break
