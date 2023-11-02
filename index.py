@@ -10,15 +10,6 @@ def is_alpha_input(user_input):
     # Check if all characters in the input are alphabets
     return all(char.isalpha() for char in user_input)
 
-# # Prompt the user for input
-# user_input = input("Enter a string of alphabets: ")
-
-# # Check if the input consists of alphabets only
-# if is_alpha_input(user_input):
-#     print("Input contains only alphabets.")
-# else:
-#     print("Input contains non-alphabet characters.")
-
 '''This regex pattern ensures that the password contains    
     exactly 4 characters, which can be numbers (0-9) or 
     letters (both lowercase and uppercase).'''
