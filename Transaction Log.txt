@@ -1,0 +1,7 @@
+malik1234: +R100.0
+malik1234: -R100.0
+malik1234: -R99.0
+malik1234: +R123.0
+malik1234: +R1000.0
+omphile11qq: +R500.02
+kwazakwa2: +R10.5

@@ -148,7 +148,7 @@ while True:
                                 break
                     else:
                         print("----------------------------------------------------------------------")
-                        print("Invalid Password,try again")  
+                        print("Invalid Password,try again!\nPassword must consist of 4 characters, a combination of alphanumeric characters")  
                 break
             else:
                 print("A name can not be anything rather than alphabets only")              
@@ -312,9 +312,9 @@ while True:
                             print(f'Deposit of R{my_amount} was successfully made.\n')
                             print(f'Current balance = R{user_bal}.')
                             
-                            #Log the deposit in the transaction log file
-                            with open("Transaction Log.txt", "a") as log_file:
-                                log_file.write(f"{comb}: -R{my_amount}\n")
+                            # #Log the deposit in the transaction log file
+                            # with open("Transaction Log.txt", "a") as log_file:
+                            #     log_file.write(f"{comb}: -R{my_amount}\n")
                             
                             #User update
                             #######################################
@@ -327,7 +327,34 @@ while True:
                             # Write the modified content back to the text file
                             with open(file_name, "w") as file:
                                 file.writelines(lines)
+                            
+                             #######################################
+                            
+                            #Append the new balanc tot the top of the transaction log
+                            new_element = f"{current_datetime} balance : R{user_bal}\n"
+                            new_bank_bal = f"{current_datetime} balance : R{the_bank_balance-my_amount}\n"
+                             
+                            # Read the content of the text file
+                            with open(file_name, "r") as file:
+                                lines = file.readlines()
+                           
+
+                            # Add the new element at the beginning
+                            lines.insert(0, new_element)
+                            
+                            # Write the modified content back to the text file
+                            with open(file_name, "w") as file:
+                                file.writelines(lines)
+                           
                             ######################################
+                            with open("bank_data.txt","r")as file:
+                                banking = file.readlines()
+                                
+                            banking.insert(0,new_bank_bal)
+                            
+                            with open("bank_data.txt", "w") as file:
+                                file.writelines(banking)
+                                
                             #Bank Data update
                             with open('bank_data.txt', "r") as file:
                                 bank_lines = file.readlines()
@@ -340,31 +367,10 @@ while True:
                             # Write the modified content back to the text file
                             with open("bank_data", "w") as file:
                                 file.writelines(bank_lines)
-                             #######################################
-                            
-                            #Append the new balanc tot the top of the transaction log
-                            new_element = f"{current_datetime} balance : R{user_bal}\n"
-                            new_bank_bal = f"{current_datetime} balance : R{the_bank_balance-my_amount}\n"
-                             
-                            # Read the content of the text file
-                            with open(file_name, "r") as file:
-                                lines = file.readlines()
-                            with open("bank_data.txt","r")as file:
-                                banking = file.readlines()
-
-                            # Add the new element at the beginning
-                            lines.insert(0, new_element)
-                            banking.insert(0,new_bank_bal)
-                            # Write the modified content back to the text file
-                            with open(file_name, "w") as file:
-                                file.writelines(lines)
-                            with open("bank_data.txt", "w") as file:
-                                file.writelines(banking)
-                                
                             #######################3
                              #update bank data
                             bankdata_txt_withdrawal(name,current_datetime,my_amount)
-                        
+                            
                         else:
                             print("Insuficient funds")
                             print("----------------------------------------------------------------------")
@@ -384,7 +390,7 @@ while True:
                     break
  
             else:
-                print("Account does not exist, please register your account")
+                print("Wrong username or password!")
                 print("----------------------------------------------------------------------")
                 break
     elif choice == '3':
