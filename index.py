@@ -94,11 +94,14 @@ while True:
                             # Print the new list
                             
                             
-                            strt_amount = float(input("To activate your account you need to deposit a start up amount.\nAmount: "))
-                            if strt_amount <= 0:
+                            val = input("To activate your account you need to deposit a start up amount.\nAmount: ")
+                            start_amount = val.replace(" ", "").strip()
+                            
+                            if start_amount.replace('.', '',1).isdigit() <= 0:
                                 print("your account can't be activated")
                                 break
-                            elif strt_amount > 0:
+                            elif start_amount.replace('.', '',1).isdigit()  > 0:
+                                strt_amount = float(start_amount)#Ediii
                                 print(f"Hi {name},your account has been successfully activated.\nCurrent Balance = R{strt_amount}")
                                 create_txt(name,strt_amount)
                                 bankdata_txt_deposit(name,current_datetime,strt_amount)
