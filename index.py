@@ -15,7 +15,8 @@ def is_alpha_input(user_input):
     letters (both lowercase and uppercase).'''
 def is_valid_password(password):
     # Define the regex pattern
-    pattern = r'^[0-9a-zA-Z]{4}$'
+    pattern =  r"^[a-z0-9]{5}$"
+    
     
     # Use re.match to check if the password matches the pattern
     if re.match(pattern, password):
@@ -73,10 +74,14 @@ while True:
     if choice == '1':#register an accouhnt
         while True:
             name = input("Enter your name: ")
+            name = name.lower().replace(" ", "")
             if is_alpha_input(name):
                 while True:
+                    print("----------------------------------------------------------------------")
+                    print("Create a new password, consisting of 5 alphanumeric characters")
                     password = input("Enter your password: ")
-                    
+                    password = password.lower()
+                    print("----------------------------------------------------------------------")
                     if is_valid_password(password):
                         secure = name + password
                         print("----------------------------------------------------------------------")
@@ -158,7 +163,9 @@ while True:
     elif choice == '2':#login
         print("----------------------------------------------------------------------")
         name = input("Enter your name: ")
+        name = name.lower()
         password = input("Enter your password: ")
+        password = password.lower()
         
         #Code that checks if the password and username is in the database 
         with open("user_infor.txt", "r")as file:
@@ -383,7 +390,8 @@ while True:
                         print("----------------------------------------------------------------------")
 
                 elif choice == '3':#Exit
-                    print("Thank you for using our services!")
+                    print(f"Thank you, {name} for using our services!\n")
+                    print("You have successfully signed out from your acount!")
                     print("----------------------------------------------------------------------")
                     break
                     break
@@ -397,6 +405,8 @@ while True:
                 print("----------------------------------------------------------------------")
                 break
     elif choice == '3':
+        print("Thank you for using our services!")
+        print("----------------------------------------------------------------------")  
         break
     else:
         print("invalid input!")
