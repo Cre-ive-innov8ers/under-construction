@@ -319,7 +319,7 @@ while True:
                         if user_bal > my_amount:
                             
                             user_bal = user_bal - my_amount #cureent user balance
-                            print(f'Deposit of R{my_amount} was successfully made.\n')
+                            print(f'withdrawal of R{my_amount} was successfully made.\n')
                             print(f'Current balance = R{user_bal}.')
                             
                             # #Log the deposit in the transaction log file
